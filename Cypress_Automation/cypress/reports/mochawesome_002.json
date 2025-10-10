@@ -1,0 +1,156 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 1,
+    "pending": 0,
+    "failures": 2,
+    "start": "2025-10-10T06:51:22.024Z",
+    "end": "2025-10-10T06:52:07.905Z",
+    "duration": 45881,
+    "testsRegistered": 3,
+    "passPercent": 33.33333333333333,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "708efb06-768e-4f96-9e1a-099014d38c63",
+      "title": "",
+      "fullFile": "cypress\\e2e\\checkout.cy.js",
+      "file": "cypress\\e2e\\checkout.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "c49b8927-010c-41d7-8326-beeae8bcb002",
+          "title": "Home Page Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "TC14 - Proceed to Checkout navigates correctly",
+              "fullTitle": "Home Page Tests TC14 - Proceed to Checkout navigates correctly",
+              "timedOut": null,
+              "duration": 16485,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('http://localhost:8080/shop/');\n// Remove cookie banner if present\ncy.get('div.cc-window').then($banner => {\n  if ($banner.length) cy.wrap($banner).invoke('remove');\n});\n// Add first featured product to cart\ncy.get('#featuredItemsContainer .product').first().find('.addToCart').click();\n// Wait for mini-cart to update\ncy.get('#miniCartSummary', {\n  timeout: 10000\n}).should($span => {\n  const count = parseInt($span.text()) || 0;\n  expect(count).to.be.greaterThan(0);\n});\n// Visit cart page\ncy.visit('http://localhost:8080/shop/cart/shoppingCart.html');\n// Remove cookie banner again\ncy.get('div.cc-window').then($banner => {\n  if ($banner.length) cy.wrap($banner).invoke('remove');\n});\n// Click Proceed to Checkout (link or button)\ncy.get('.wc-proceed-to-checkout a, .wc-proceed-to-checkout button', {\n  timeout: 10000\n}).should('be.visible').first().click();\n// Verify checkout URL\ncy.url().should('include', '/shop/order/checkout.html');",
+              "err": {},
+              "uuid": "2b202ac9-e7f5-4d8a-b143-4b819eda1bff",
+              "parentUUID": "c49b8927-010c-41d7-8326-beeae8bcb002",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC15 - Billing information form should accept valid inputs",
+              "fullTitle": "Home Page Tests TC15 - Billing information form should accept valid inputs",
+              "timedOut": null,
+              "duration": 11529,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('http://localhost:8080/shop/');\n// Remove cookie banner\ncy.get('div.cc-window').then($banner => {\n  if ($banner.length) cy.wrap($banner).invoke('remove');\n});\n// Add first product to cart\ncy.get('#featuredItemsContainer .product').first().find('.addToCart').click();\n// Wait for mini-cart\ncy.get('#miniCartSummary', {\n  timeout: 10000\n}).should($span => {\n  const count = parseInt($span.text()) || 0;\n  expect(count).to.be.greaterThan(0);\n});\n// Visit cart page\ncy.visit('http://localhost:8080/shop/cart/shoppingCart.html');\n// Remove cookie banner again\ncy.get('div.cc-window').then($banner => {\n  if ($banner.length) cy.wrap($banner).invoke('remove');\n});\n// Proceed to checkout\ncy.get('.wc-proceed-to-checkout a, .wc-proceed-to-checkout button', {\n  timeout: 10000\n}).should('be.visible').first().click();\n// Fill billing info\ncy.get('#customer\\\\.firstName').clear().type('Arun');\ncy.get('#customer\\\\.lastName').clear().type('Kambrekar');\ncy.get('#customer\\\\.billing\\\\.address').clear().type('123 Test Street');\ncy.get('#customer\\\\.billing\\\\.city').clear().type('Quebec');\ncy.get('#customer\\\\.billing\\\\.country').select('Canada');\ncy.get('#billingStateList').select('QC');\ncy.get('#billingPostalCode').clear().type('H2H2H2');\ncy.get('#customer\\\\.emailAddress').clear().type('arun.test@example.com');\ncy.get('#customer\\\\.billing\\\\.phone').clear().type('8888888888');\n// Assert no error\ncy.get('#checkoutError').should('not.exist');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected <div#checkoutError> not to exist in the DOM, but it was continuously found.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected <div#checkoutError> not to exist in the DOM, but it was continuously found.\n    at Context.eval (webpack://cypress_automation/./cypress/e2e/checkout.cy.js:92:27)",
+                "diff": null
+              },
+              "uuid": "8b7ec522-e29b-4a19-94d8-8bf52d270e4a",
+              "parentUUID": "c49b8927-010c-41d7-8326-beeae8bcb002",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC16 - Shipping information form should accept valid inputs and submit order",
+              "fullTitle": "Home Page Tests TC16 - Shipping information form should accept valid inputs and submit order",
+              "timedOut": null,
+              "duration": 17613,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('http://localhost:8080/shop/');\n// Remove cookie banner\ncy.get('div.cc-window').then($banner => {\n  if ($banner.length) cy.wrap($banner).invoke('remove');\n});\n// Add first product to cart\ncy.get('#featuredItemsContainer .product').first().find('.addToCart').click();\n// Wait for mini-cart\ncy.get('#miniCartSummary', {\n  timeout: 10000\n}).should($span => {\n  const count = parseInt($span.text()) || 0;\n  expect(count).to.be.greaterThan(0);\n});\n// Visit cart page\ncy.visit('http://localhost:8080/shop/cart/shoppingCart.html');\n// Remove cookie banner again\ncy.get('div.cc-window').then($banner => {\n  if ($banner.length) cy.wrap($banner).invoke('remove');\n});\n// Proceed to checkout\ncy.get('.wc-proceed-to-checkout a, .wc-proceed-to-checkout button', {\n  timeout: 10000\n}).should('be.visible').first().click();\n// Fill billing info\ncy.get('#customer\\\\.firstName').clear().type('Arun');\ncy.get('#customer\\\\.lastName').clear().type('Kambrekar');\ncy.get('#customer\\\\.billing\\\\.address').clear().type('123 Test Street');\ncy.get('#customer\\\\.billing\\\\.city').clear().type('Quebec');\ncy.get('#customer\\\\.billing\\\\.country').select('Canada');\ncy.get('#billingStateList').select('QC');\ncy.get('#billingPostalCode').clear().type('H2H2H2');\ncy.get('#customer\\\\.emailAddress').clear().type('arun.test@example.com');\ncy.get('#customer\\\\.billing\\\\.phone').clear().type('8888888888');\n// Ship to different address\ncy.get('#shipToDeliveryAddress').check({\n  force: true\n});\n// Fill shipping info\ncy.get('input[name=\"customer.delivery.firstName\"]').clear().type('Arun');\ncy.get('input[name=\"customer.delivery.lastName\"]').clear().type('Kambrekar');\ncy.get('#customer\\\\.delivery\\\\.address').clear().type('456 Delivery Street');\ncy.get('#customer\\\\.delivery\\\\.city').clear().type('Montreal');\ncy.get('#customer\\\\.delivery\\\\.country').select('Canada');\ncy.get('#deliveryStateList').select('QC');\ncy.get('#deliveryPostalCode').clear().type('H3H3H3');\n// Order notes\ncy.get('#comments').clear().type('Please deliver between 9 AM and 5 PM.');\n// Submit order\ncy.get('#submitOrder', {\n  timeout: 10000\n}).should('not.be.disabled').click();\n// Verify order confirmation page\ncy.url().should('include', '/shop/order/commitOrder.html');\ncy.contains('Order Confirmation', {\n  timeout: 10000\n}).should('be.visible');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 'http://localhost:8080/shop/order/confirmation.html' to include '/shop/order/commitOrder.html'",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 'http://localhost:8080/shop/order/confirmation.html' to include '/shop/order/commitOrder.html'\n    at Context.eval (webpack://cypress_automation/./cypress/e2e/checkout.cy.js:160:11)",
+                "diff": null
+              },
+              "uuid": "369234a7-2bf9-4b10-9855-da1f60f762e0",
+              "parentUUID": "c49b8927-010c-41d7-8326-beeae8bcb002",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "2b202ac9-e7f5-4d8a-b143-4b819eda1bff"
+          ],
+          "failures": [
+            "8b7ec522-e29b-4a19-94d8-8bf52d270e4a",
+            "369234a7-2bf9-4b10-9855-da1f60f762e0"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 45627,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "charts": true,
+        "reportTitle": "Shopizer Cypress Test Report",
+        "embeddedScreenshots": true,
+        "inlineAssets": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

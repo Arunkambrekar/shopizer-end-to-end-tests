@@ -1,0 +1,201 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 6,
+    "passes": 5,
+    "pending": 1,
+    "failures": 0,
+    "start": "2025-10-10T07:54:56.374Z",
+    "end": "2025-10-10T07:55:09.775Z",
+    "duration": 13401,
+    "testsRegistered": 6,
+    "passPercent": 100,
+    "pendingPercent": 16.666666666666664,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "e1158539-00d1-4286-a396-0fdbf4573bc0",
+      "title": "",
+      "fullFile": "cypress\\e2e\\admin_Dashboard_page.cy.js",
+      "file": "cypress\\e2e\\admin_Dashboard_page.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "a3c18b42-91c1-4988-8ebe-4755479b9dd3",
+          "title": "Admin Dashboard Page Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "TC01 - should display dashboard main elements",
+              "fullTitle": "Admin Dashboard Page Tests TC01 - should display dashboard main elements",
+              "timedOut": null,
+              "duration": 2900,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Verify top bar with admin email dropdown\ncy.get('a.dropdown-toggle').contains('admin@shopizer.com').should('be.visible');\n// Verify My profile and Logout options exist in dropdown\ncy.get('a.dropdown-toggle').contains('admin@shopizer.com').click();\ncy.get('ul.dropdown-menu a').contains('My profile').should('be.visible');\ncy.get('ul.dropdown-menu a').contains('Logout').should('be.visible');\n// Verify language dropdown exists\ncy.get('a.dropdown-toggle').contains('Language').should('be.visible');\ncy.get('a.dropdown-toggle').contains('Language').click();\ncy.get('ul.dropdown-menu a').contains('en').should('be.visible');\ncy.get('ul.dropdown-menu a').contains('fr').should('be.visible');\n// Verify Shopizer logo is visible\ncy.get('.brand img[src*=\"shopizer_small.jpg\"]').should('be.visible');\n// Verify Home icon link exists\ncy.get('a[href=\"/admin/home.html\"] i.icon-home').should('be.visible');",
+              "err": {},
+              "uuid": "a09d4c44-4779-47f0-a3d6-385c532d2013",
+              "parentUUID": "a3c18b42-91c1-4988-8ebe-4755479b9dd3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC02 - should open My Profile page from dashboard",
+              "fullTitle": "Admin Dashboard Page Tests TC02 - should open My Profile page from dashboard",
+              "timedOut": null,
+              "duration": 3147,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// 1️⃣ Login as admin\ncy.visit('http://localhost:8080/admin/logon.html');\ncy.get('#username').type('admin@shopizer.com');\ncy.get('#password').type('password');\ncy.get('#formSubmitButton').click();\n// 2️⃣ Open My Profile page via User dropdown\ncy.get('a.dropdown-toggle').contains('admin@shopizer.com').click();\ncy.get('ul.dropdown-menu a').contains('My profile').click();\n// 3️⃣ Verify URL\ncy.url().should('include', '/admin/users/displayUser.html');\n// 4️⃣ Verify heading exists (use actual heading text)\ncy.get('h3').should('exist').and('contain.text', 'Edit user');",
+              "err": {},
+              "uuid": "b5a556d5-09fe-44ca-b1cb-5b8d12e960cb",
+              "parentUUID": "a3c18b42-91c1-4988-8ebe-4755479b9dd3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC03 - should update admin profile fields and save successfully",
+              "fullTitle": "Admin Dashboard Page Tests TC03 - should update admin profile fields and save successfully",
+              "timedOut": null,
+              "duration": 2549,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// 2️⃣ Open My Profile page\ncy.contains('admin@shopizer.com').click();\ncy.contains('My profile').click();\n// Correct URL assertion\ncy.url().should('include', '/admin/users/displayUser.html');\n// 3️⃣ Update profile fields\ncy.get('#firstName').clear().type('AdminUpdated');\ncy.get('#lastName').clear().type('UserUpdated');\n// Optional: Update email if needed\n// cy.get('#adminEmail').clear().type('adminupdated@shopizer.com');\n// 4️⃣ Click Save\ncy.get('button.btn-success').click();\n// 5️⃣ Verify profile fields are updated\ncy.get('#firstName').should('have.value', 'AdminUpdated');\ncy.get('#lastName').should('have.value', 'UserUpdated');\n// Note: #store.success may not appear immediately due to Shopizer behavior\n// If needed, you can check for visibility after a small wait:\n// cy.get('#store.success', { timeout: 5000 }).should('be.visible');",
+              "err": {},
+              "uuid": "be6108aa-93b8-4975-96a7-3620231800b0",
+              "parentUUID": "a3c18b42-91c1-4988-8ebe-4755479b9dd3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC04 - Search Orders with valid keyword shows results",
+              "fullTitle": "Admin Dashboard Page Tests TC04 - Search Orders with valid keyword shows results",
+              "timedOut": null,
+              "duration": 2251,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('http://localhost:8080/admin/home.html');\nconst customerName = 'Johny'; // Use first name for reliable search\n// Type the customer name\ncy.get('input[name=\"customer\"]').clear().type(customerName);\n// Wait for the grid to update dynamically\ncy.get('div.gridBody', {\n  timeout: 10000\n}).should('be.visible');\n// Get all rows after grid update\ncy.get('div.gridBody div[role=\"presentation\"]', {\n  timeout: 10000\n}).should('exist').then($rows => {\n  // Assert at least one row contains the customer name\n  const matches = $rows.toArray().filter(row => row.innerText.includes(customerName));\n  expect(matches.length).to.be.greaterThan(0);\n});",
+              "err": {},
+              "uuid": "882b9520-c0fc-426b-8dab-b630cb1a1c4d",
+              "parentUUID": "a3c18b42-91c1-4988-8ebe-4755479b9dd3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC05 - Search Orders with invalid keyword shows no results",
+              "fullTitle": "Admin Dashboard Page Tests TC05 - Search Orders with invalid keyword shows no results",
+              "timedOut": null,
+              "duration": 2321,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('http://localhost:8080/admin/home.html');\nconst invalidCustomer = 'Invalid Name 123';\n// Type the invalid customer name\ncy.get('input[name=\"customer\"]').clear().type(invalidCustomer);\n// Wait for the grid to update dynamically\ncy.get('div.gridBody', {\n  timeout: 10000\n}).should('be.visible');\n// Assert that the \"No items to show.\" message is visible\ncy.get('td.emptyMessage', {\n  timeout: 10000\n}).should('be.visible').and('contain.text', 'No items to show.');\n// Assert that no data rows are present\ncy.get('div.gridBody div[role=\"presentation\"]').should('have.length', 0);",
+              "err": {},
+              "uuid": "c9f2200e-8540-4e2b-86d2-b1c72bdcbc86",
+              "parentUUID": "a3c18b42-91c1-4988-8ebe-4755479b9dd3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC06 - Update Order Status from Orders List",
+              "fullTitle": "Admin Dashboard Page Tests TC06 - Update Order Status from Orders List",
+              "timedOut": null,
+              "duration": 0,
+              "state": "pending",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": true,
+              "context": null,
+              "code": "// This test is skipped because the order status update feature is not present",
+              "err": {},
+              "uuid": "6c5f286c-b2db-487e-9f41-da7ba534e2a9",
+              "parentUUID": "a3c18b42-91c1-4988-8ebe-4755479b9dd3",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a09d4c44-4779-47f0-a3d6-385c532d2013",
+            "b5a556d5-09fe-44ca-b1cb-5b8d12e960cb",
+            "be6108aa-93b8-4975-96a7-3620231800b0",
+            "882b9520-c0fc-426b-8dab-b630cb1a1c4d",
+            "c9f2200e-8540-4e2b-86d2-b1c72bdcbc86"
+          ],
+          "failures": [],
+          "pending": [
+            "6c5f286c-b2db-487e-9f41-da7ba534e2a9"
+          ],
+          "skipped": [],
+          "duration": 13168,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

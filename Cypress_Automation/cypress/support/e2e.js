@@ -14,4 +14,12 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import '@shelex/cypress-allure-plugin';
+
+// Optional: Handle screenshots for reports
+Cypress.on('test:after:run', (test, runnable) => {
+  if (test.state === 'failed') {
+    const screenshotFileName = `${runnable.parent.title} -- ${test.title} (failed).png`;
+    cy.log(`Screenshot taken: ${screenshotFileName}`);
+  }
+});

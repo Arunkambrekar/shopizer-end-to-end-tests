@@ -1,0 +1,50 @@
+name: 🧪 Cypress Tests (Shopizer Automation)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start Shopizer in Docker
+        run: |
+          docker-compose up -d
+          sleep 30  # give container time to start
+
+      - name: Run Cypress tests
+        run: npx cypress run
+
+      - name: Generate Mochawesome report
+        run: |
+          mkdir -p cypress/reports/combined
+          npx mochawesome-merge cypress/reports/*.json > cypress/reports/combined/report.json
+          npx marge cypress/reports/combined/report.json --reportDir cypress/reports/combined --reportTitle "Shopizer Cypress Automation Report"
+
+      - name: Upload HTML Report Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cypress-Report
+          path: cypress/reports/combined/
+
+      - name: Upload Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cypress-Screenshots
+          path: cypress/screenshots/

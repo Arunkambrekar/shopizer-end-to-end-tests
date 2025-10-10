@@ -1,0 +1,204 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 6,
+    "passes": 6,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-10-10T06:59:58.124Z",
+    "end": "2025-10-10T07:00:12.484Z",
+    "duration": 14360,
+    "testsRegistered": 6,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "b8db5d56-1514-487b-ab20-d7060d6233bc",
+      "title": "",
+      "fullFile": "cypress\\e2e\\registration.cy.js",
+      "file": "cypress\\e2e\\registration.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "02194c2a-9606-4363-aeb0-aa23c8bda1a8",
+          "title": "Registration Page Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "TC01 - Should display all mandatory fields",
+              "fullTitle": "Registration Page Tests TC01 - Should display all mandatory fields",
+              "timedOut": null,
+              "duration": 1543,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('#firstName').should('be.visible');\ncy.get('#lastName').should('be.visible');\ncy.get('#registration_country').should('be.visible');\ncy.get('#hidden_zones').should('be.visible');\ncy.get('#emailAddress').should('be.visible');\ncy.get('#password').should('be.visible');\ncy.get('#passwordAgain').should('be.visible');\ncy.get('button[type=\"submit\"]').contains('Create an account').should('be.visible');",
+              "err": {},
+              "uuid": "2f03a27a-59bc-42a0-85ed-79f9d43085a3",
+              "parentUUID": "02194c2a-9606-4363-aeb0-aa23c8bda1a8",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC02 - Should register new user successfully",
+              "fullTitle": "Registration Page Tests TC02 - Should register new user successfully",
+              "timedOut": null,
+              "duration": 3208,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const uniqueEmail = `test_${Date.now()}@mail.com`;\ncy.get('#firstName').type('Arun');\ncy.get('#lastName').type('Kambrekar');\ncy.get('#registration_country').select('India');\ncy.get('#hidden_zones').type('Karnataka');\ncy.get('#emailAddress').type(uniqueEmail);\ncy.get('#password').type('Password123!');\ncy.get('#passwordAgain').type('Password123!');\ncy.get('button[type=\"submit\"]').click();\n// ✅ Assertion: depends on app behavior\ncy.url().should('not.include', 'registration.html');",
+              "err": {},
+              "uuid": "8e42b7b5-5437-432b-8db6-d9d160a07a69",
+              "parentUUID": "02194c2a-9606-4363-aeb0-aa23c8bda1a8",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC03 - Should show errors when submitting empty form",
+              "fullTitle": "Registration Page Tests TC03 - Should show errors when submitting empty form",
+              "timedOut": null,
+              "duration": 526,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('button[type=\"submit\"]').click();\n// Assertions based on \"title\" attribute set in the HTML\ncy.get('#firstName').should('have.attr', 'title', 'First name is required');\ncy.get('#lastName').should('have.attr', 'title', 'Last name is required');\ncy.get('#hidden_zones').should('have.attr', 'title', 'State / Province is required');\ncy.get('#emailAddress').should('have.attr', 'title', 'Email address is required');\ncy.get('#password').should('have.attr', 'title', 'A password is required');\ncy.get('#passwordAgain').should('have.attr', 'title', 'Repeated password is required');",
+              "err": {},
+              "uuid": "4e9d448f-2c44-4d4d-bb04-eb0f78fcfb0f",
+              "parentUUID": "02194c2a-9606-4363-aeb0-aa23c8bda1a8",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC04 - Should NOT accept invalid email format (Known Issue)",
+              "fullTitle": "Registration Page Tests TC04 - Should NOT accept invalid email format (Known Issue)",
+              "timedOut": null,
+              "duration": 2839,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const invalidEmail = 'invalidEmail';\ncy.get('#firstName').type('Arun');\ncy.get('#lastName').type('Kambrekar');\ncy.get('#registration_country').select('India');\ncy.get('#hidden_zones').type('Karnataka');\ncy.get('#emailAddress').type(invalidEmail);\ncy.get('#password').type('Password123!');\ncy.get('#passwordAgain').type('Password123!');\ncy.get('button[type=\"submit\"]').click();\n// ✅ Accept both registration.html and register.html\ncy.url().then(url => {\n  if (url.includes('dashboard.html')) {\n    cy.log('❌ Bug: Invalid email was accepted, user redirected to dashboard');\n  } else {\n    expect(url).to.satisfy(u => u.includes('registration.html') || u.includes('register.html'));\n  }\n});",
+              "err": {},
+              "uuid": "3614c374-e956-4f7d-b497-fb33e1bc9ddf",
+              "parentUUID": "02194c2a-9606-4363-aeb0-aa23c8bda1a8",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC05 - Should show error when passwords do not match",
+              "fullTitle": "Registration Page Tests TC05 - Should show error when passwords do not match",
+              "timedOut": null,
+              "duration": 3079,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const uniqueEmail = `test_${Date.now()}@mail.com`;\ncy.get('#firstName').type('Arun');\ncy.get('#lastName').type('Kambrekar');\ncy.get('#registration_country').select('India');\ncy.get('#hidden_zones').type('Karnataka');\ncy.get('#emailAddress').type(uniqueEmail);\ncy.get('#password').type('Password123!');\ncy.get('#passwordAgain').type('Password456!');\ncy.get('button[type=\"submit\"]').click();\n// ✅ Correct validation message\ncy.get('body').should('contain.text', 'Both password must match');",
+              "err": {},
+              "uuid": "d911f035-2c29-48c9-afce-63471420270b",
+              "parentUUID": "02194c2a-9606-4363-aeb0-aa23c8bda1a8",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should show error when email is already registered",
+              "fullTitle": "Registration Page Tests Should show error when email is already registered",
+              "timedOut": null,
+              "duration": 2903,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Visit registration page\ncy.visit('http://localhost:8080/shop/customer/registration.html');\n// Fill the registration form\ncy.get('#firstName').type('Arun');\ncy.get('#lastName').type('Kambrekar');\ncy.get('#registration_country').select('India');\ncy.get('#hidden_zones').type('Karnataka');\ncy.get('#emailAddress').type('admin@shopizer.com'); // existing email\ncy.get('#password').type('Password123!');\ncy.get('#passwordAgain').type('Password123!');\n// Submit the form\ncy.get('button[type=\"submit\"]').click();\n// ✅ Assert the error message is visible after page reload\ncy.get('#customer\\\\.errors', {\n  timeout: 10000\n}) // wait up to 10s for element\n.should('be.visible').and('contain.text', 'User with user name already exists for this store.');",
+              "err": {},
+              "uuid": "5c82e11a-4995-49c8-b4bc-04656946df94",
+              "parentUUID": "02194c2a-9606-4363-aeb0-aa23c8bda1a8",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "2f03a27a-59bc-42a0-85ed-79f9d43085a3",
+            "8e42b7b5-5437-432b-8db6-d9d160a07a69",
+            "4e9d448f-2c44-4d4d-bb04-eb0f78fcfb0f",
+            "3614c374-e956-4f7d-b497-fb33e1bc9ddf",
+            "d911f035-2c29-48c9-afce-63471420270b",
+            "5c82e11a-4995-49c8-b4bc-04656946df94"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 14098,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "charts": true,
+        "reportTitle": "Shopizer Cypress Test Report",
+        "embeddedScreenshots": true,
+        "inlineAssets": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

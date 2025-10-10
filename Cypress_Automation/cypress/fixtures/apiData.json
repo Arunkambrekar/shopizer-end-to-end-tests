@@ -1,0 +1,18 @@
+{
+  "admin": {
+    "email": "admin@shopizer.com",
+    "password": "password"
+  },
+  "customer": {
+    "email": "customer@shopizer.com",
+    "password": "cust123"
+  },
+  "product": {
+    "id": 1,
+    "quantity": 2
+  },
+  "order": {
+    "customerId": 1,
+    "paymentMethod": "CREDIT_CARD"
+  }
+}
