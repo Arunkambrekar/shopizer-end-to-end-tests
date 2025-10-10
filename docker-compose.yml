@@ -1,0 +1,39 @@
+services:
+  db:
+    image: mysql:5.7
+    container_name: shopizer_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: shopizer
+      MYSQL_USER: shopizeruser
+      MYSQL_PASSWORD: shopizerpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  web:
+    image: shopizer-2170-shopizer   # public Shopizer image
+    container_name: shopizer_web
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/shopizer?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: shopizeruser
+      SPRING_DATASOURCE_PASSWORD: shopizerpass
+    ports:
+      - "8080:8080"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: shopizer_phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "8081:80"
+
+volumes:
+  db_data:
